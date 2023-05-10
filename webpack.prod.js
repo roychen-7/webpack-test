@@ -4,6 +4,8 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const glob = require("glob");
+const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
+
 
 const setMPA = () => {
   const entry = {};
@@ -21,7 +23,7 @@ const setMPA = () => {
       new HtmlWebpackPlugin({
         template: path.join(__dirname, "src", pageName, "index.html"),
         filename: `${pageName}.html`,
-        chunks: [pageName],
+        chunks: [pageName, 'vendors'],
         inject: true,
         minify: {
           html5: true,
@@ -61,6 +63,20 @@ module.exports = {
     }),
     ...htmlWebpackPlugins,
     new CleanWebpackPlugin(),
+    // new HtmlWebpackExternalsPlugin({
+    //   externals: [
+    //     {
+    //       module: 'react',
+    //       entry: 'https://unpkg.com/react@18.2.0/umd/react.production.min.js',
+    //       global: 'React',
+    //     },
+    //     {
+    //       module: 'react-dom',
+    //       entry: 'https://unpkg.com/react-dom@18/umd/react-dom.production.min.js',
+    //       global: 'ReactDOM',
+    //     },
+    //   ],
+    // })
   ],
   optimization: {
     minimize: true,
@@ -79,6 +95,17 @@ module.exports = {
         ],
       }),
     ],
+    splitChunks: {
+      minSize: 0,
+      cacheGroups: {
+        commons: {
+          // test: /(react|react-dom)/,
+          minChunks: 2,
+          name: 'commons',
+          chunks: 'all'
+        }
+      }
+    }
   },
   module: {
     rules: [

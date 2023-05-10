@@ -3,9 +3,10 @@ import { createRoot } from "react-dom/client";
 
 import test from "./test.png";
 import "./index.less";
+import { commmon } from '../../common/index.js'
 
 const App = () => {
-  debugger;
+  commmon()
   return (
     <>
       <div className="main">App</div>
