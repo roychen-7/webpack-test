@@ -46,8 +46,8 @@ const setMPA = () => {
 const { entry, htmlWebpackPlugins } = setMPA();
 
 module.exports = {
-  // mode: "production",
-  mode: "none",
+  mode: "production",
+  // mode: "none",
   entry: entry,
   output: {
     path: path.resolve(__dirname, "dist"),
