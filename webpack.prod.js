@@ -67,6 +67,14 @@ module.exports = {
     new CleanWebpackPlugin(),
     new ESLintPlugin(),
     new FriendlyErrorsWebpackPlugin(),
+    function () {
+      this.hooks.done.tap("done", (stats) => {
+        if (stats.compilation.errors && stats.compilation.errors.length > 0) {
+          console.log("build error");
+          process.exit(1);
+        }
+      });
+    },
     // new HtmlWebpackExternalsPlugin({
     //   externals: [
     //     {
