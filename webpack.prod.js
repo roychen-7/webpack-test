@@ -4,6 +4,7 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const ESLintPlugin = require("eslint-webpack-plugin");
+const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 
 const glob = require("glob");
 const HtmlWebpackExternalsPlugin = require("html-webpack-externals-plugin");
@@ -65,6 +66,7 @@ module.exports = {
     ...htmlWebpackPlugins,
     new CleanWebpackPlugin(),
     new ESLintPlugin(),
+    new FriendlyErrorsWebpackPlugin(),
     // new HtmlWebpackExternalsPlugin({
     //   externals: [
     //     {
@@ -157,4 +159,5 @@ module.exports = {
     ],
   },
   devtool: "source-map",
+  stats: "none",
 };
