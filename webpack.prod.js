@@ -3,9 +3,10 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
-const glob = require("glob");
-const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
+const ESLintPlugin = require("eslint-webpack-plugin");
 
+const glob = require("glob");
+const HtmlWebpackExternalsPlugin = require("html-webpack-externals-plugin");
 
 const setMPA = () => {
   const entry = {};
@@ -23,7 +24,7 @@ const setMPA = () => {
       new HtmlWebpackPlugin({
         template: path.join(__dirname, "src", pageName, "index.html"),
         filename: `${pageName}.html`,
-        chunks: [pageName, 'vendors'],
+        chunks: [pageName, "vendors"],
         inject: true,
         minify: {
           html5: true,
@@ -63,6 +64,7 @@ module.exports = {
     }),
     ...htmlWebpackPlugins,
     new CleanWebpackPlugin(),
+    new ESLintPlugin(),
     // new HtmlWebpackExternalsPlugin({
     //   externals: [
     //     {
@@ -101,17 +103,17 @@ module.exports = {
         commons: {
           // test: /(react|react-dom)/,
           minChunks: 2,
-          name: 'commons',
-          chunks: 'all'
-        }
-      }
-    }
+          name: "commons",
+          chunks: "all",
+        },
+      },
+    },
   },
   module: {
     rules: [
       {
         test: /.js$/,
-        use: "babel-loader",
+        use: ["babel-loader"],
       },
       {
         test: /.css$/,

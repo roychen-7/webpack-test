@@ -3,20 +3,23 @@ import { createRoot } from "react-dom/client";
 
 import test from "./test.png";
 import "./index.less";
-import { commmon } from '../../common/index.js'
+import { commmon } from "../../common/index.js";
 
 const App = () => {
-  commmon()
+  commmon();
 
   return (
     <>
       <div className="main">App</div>
-      <img src={test} onClick={() => {
-        import("./test").then(d => {
-          console.log(d.default)
-          d.default()
-        });
-      }} />
+      <img
+        src={test}
+        onClick={() => {
+          // import("./test").then(d => {
+          //   console.log(d.default)
+          //   d.default()
+          // });
+        }}
+      />
     </>
   );
 };
