@@ -6,6 +6,7 @@
   "scripts": {
     "build": "webpack --config webpack.prod.js",
     "watch": "webpack --watch webpack.dev.js",
+    "build:ssr": "webpack --config webpack.ssr.js",
     "dev": "webpack-dev-server --config webpack.dev.js --hot"
   },
   "keywords": [],
@@ -49,6 +50,7 @@
   "dependencies": {
     "@cyroytest/large-number": "^1.0.0",
     "eslint-config-airbnb": "^19.0.4",
+    "express": "^4.18.2",
     "lib-flexible": "^0.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
