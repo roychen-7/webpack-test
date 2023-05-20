@@ -1,14 +1,17 @@
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
-const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+
+const glob = require('glob');
+const path = require('path');
 
 const setMPA = () => {
   const entry = {};
   const htmlWebpackPlugins = [];
 
-  const entryFiles = glob.sync(path.join(__dirname, "./src/*/index.js"));
-  Object.keys(entryFiles).map((index) => {
+  const entryFiles = glob.sync(path.join(__dirname, './src/*/index.js'));
+  Object.keys(entryFiles).forEach((index) => {
     const entryFile = entryFiles[index];
     const match = entryFile.match(/src\/(.*)\/index\.js/);
 
@@ -17,9 +20,9 @@ const setMPA = () => {
     entry[pageName] = entryFile;
     htmlWebpackPlugins.push(
       new HtmlWebpackPlugin({
-        template: path.join(__dirname, "src", pageName, "index.html"),
+        template: path.join(__dirname, 'src', pageName, 'index.html'),
         filename: `${pageName}.html`,
-        chunks: [pageName, "vendors"],
+        chunks: [pageName, 'vendors'],
         inject: true,
         minify: {
           html5: true,
@@ -29,7 +32,7 @@ const setMPA = () => {
           minifyJS: true,
           removeComments: false,
         },
-      })
+      }),
     );
   });
 
@@ -42,18 +45,17 @@ const setMPA = () => {
 const { entry, htmlWebpackPlugins } = setMPA();
 
 module.exports = {
-  entry: entry,
+  entry,
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "[name].[contenthash:8].css",
+      filename: '[name].[contenthash:8].css',
     }),
     new CleanWebpackPlugin(),
     ...htmlWebpackPlugins,
     new FriendlyErrorsWebpackPlugin(),
-    function () {
-      this.hooks.done.tap("done", (stats) => {
+    function hooksDown() {
+      this.hooks.done.tap('done', (stats) => {
         if (stats.compilation.errors && stats.compilation.errors.length > 0) {
-          console.log("build error");
           process.exit(1);
         }
       });
@@ -63,28 +65,28 @@ module.exports = {
     rules: [
       {
         test: /.js$/,
-        use: ["babel-loader"],
+        use: ['babel-loader'],
       },
       {
         test: /.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         test: /.less$/,
         use: [
           MiniCssExtractPlugin.loader,
-          "css-loader",
-          "less-loader",
+          'css-loader',
+          'less-loader',
           {
-            loader: "postcss-loader",
+            loader: 'postcss-loader',
             options: {
               postcssOptions: {
-                plugins: [["autoprefixer"]],
+                plugins: [['autoprefixer']],
               },
             },
           },
           {
-            loader: "px2rem-loader",
+            loader: 'px2rem-loader',
             options: {
               remUnit: 75,
               remPrecision: 8,
@@ -96,9 +98,9 @@ module.exports = {
         test: /\.(png|svg|jpg|gif)$/,
         use: [
           {
-            loader: "file-loader",
+            loader: 'file-loader',
             options: {
-              name: "img/[name][hash:8].[ext]",
+              name: 'img/[name][hash:8].[ext]',
               // limit: 100000,
             },
           },
@@ -106,5 +108,5 @@ module.exports = {
       },
     ],
   },
-  stats: "none",
+  stats: 'none',
 };

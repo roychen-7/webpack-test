@@ -1,16 +1,16 @@
-const webpackMerge = require("webpack-merge");
-const baseConfig = require("./webpack.base");
-const webpack = requrie("webpack");
+const webpackMerge = require('webpack-merge');
+const webpack = require('webpack');
+const baseConfig = require('./webpack.base');
 
 const devConfig = {
-  mode: "development",
+  mode: 'development',
   plugins: [new webpack.HotModuleReplacementPlugin()],
   devServer: {
-    static: "./dist",
+    static: './dist',
     hot: true,
-    stats: "errors-only",
+    stats: 'errors-only',
   },
-  devtool: "source-map",
+  devtool: 'source-map',
 };
 
 module.exports = webpackMerge(baseConfig, devConfig);

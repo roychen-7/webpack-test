@@ -1,10 +1,10 @@
-const webpackMerge = require("webpack-merge");
-const baseConfig = require("./webpack.base");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const HtmlWebpackExternalsPlugin = require("html-webpack-externals-plugin");
+const webpackMerge = require('webpack-merge');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
+const baseConfig = require('./webpack.base');
 
 const prodConfig = {
-  mode: "production",
+  mode: 'production',
   plugins: [
     new CssMinimizerPlugin({
       test: /\.css$/i,
@@ -13,15 +13,15 @@ const prodConfig = {
     new HtmlWebpackExternalsPlugin({
       externals: [
         {
-          module: "react",
-          entry: "https://unpkg.com/react@18.2.0/umd/react.production.min.js",
-          global: "React",
+          module: 'react',
+          entry: 'https://unpkg.com/react@18.2.0/umd/react.production.min.js',
+          global: 'React',
         },
         {
-          module: "react-dom",
+          module: 'react-dom',
           entry:
-            "https://unpkg.com/react-dom@18/umd/react-dom.production.min.js",
-          global: "ReactDOM",
+            'https://unpkg.com/react-dom@18/umd/react-dom.production.min.js',
+          global: 'ReactDOM',
         },
       ],
     }),
@@ -33,7 +33,7 @@ const prodConfig = {
         minimizerOptions: {
           level: {
             1: {
-              roundingPrecision: "all=3,px=5",
+              roundingPrecision: 'all=3,px=5',
             },
           },
         },
@@ -48,8 +48,8 @@ const prodConfig = {
       cacheGroups: {
         commons: {
           minChunks: 2,
-          name: "commons",
-          chunks: "all",
+          name: 'commons',
+          chunks: 'all',
         },
       },
     },
