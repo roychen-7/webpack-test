@@ -4,9 +4,12 @@ import { createRoot } from "react-dom/client";
 import test from "./test.png";
 import "./index.less";
 import { commmon } from "../../common/index.js";
+import largeNumber from "@cyroytest/large-number";
 
 const App = () => {
   commmon();
+
+  console.log(largeNumber(1, 2));
 
   return (
     <>
