@@ -5,6 +5,11 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const ESLintPlugin = require("eslint-webpack-plugin");
 const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
+// const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const WebpackBundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+
+// const smp = new SpeedMeasurePlugin();
 
 const glob = require("glob");
 const HtmlWebpackExternalsPlugin = require("html-webpack-externals-plugin");
@@ -47,6 +52,7 @@ const setMPA = () => {
 
 const { entry, htmlWebpackPlugins } = setMPA();
 
+// module.exports = smp.wrap({
 module.exports = {
   mode: "production",
   // mode: "none",
@@ -75,6 +81,7 @@ module.exports = {
         }
       });
     },
+    // new WebpackBundleAnalyzerPlugin(),
     // new HtmlWebpackExternalsPlugin({
     //   externals: [
     //     {
@@ -167,5 +174,6 @@ module.exports = {
     ],
   },
   devtool: "source-map",
-  stats: "none",
+  // stats: "none",
+  // });
 };
