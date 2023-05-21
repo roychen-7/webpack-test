@@ -5,6 +5,7 @@ import test from "./test.png";
 import "./index.less";
 import { commmon } from "../../common/index.js";
 import largeNumber from "@cyroytest/large-number";
+import "babel-polyfill";
 
 const App = () => {
   commmon();

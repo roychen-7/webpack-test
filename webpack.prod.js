@@ -8,6 +8,7 @@ const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 // const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 const WebpackBundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const TerserPlugin = require("terser-webpack-plugin");
 
 // const smp = new SpeedMeasurePlugin();
 
@@ -113,6 +114,7 @@ module.exports = {
           CssMinimizerPlugin.cleanCssMinify,
         ],
       }),
+      new TerserPlugin({ parallel: true }),
     ],
     splitChunks: {
       minSize: 0,
@@ -130,7 +132,15 @@ module.exports = {
     rules: [
       {
         test: /.js$/,
-        use: ["babel-loader"],
+        use: [
+          {
+            loader: "thread-loader",
+            options: {
+              workers: 4,
+            },
+          },
+          "babel-loader",
+        ],
       },
       {
         test: /.css$/,
