@@ -9,6 +9,9 @@ const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 const WebpackBundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const TerserPlugin = require("terser-webpack-plugin");
+const webpack = require("webpack");
+const HappyPack = require("happypack");
+var HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 
 // const smp = new SpeedMeasurePlugin();
 
@@ -82,21 +85,26 @@ module.exports = {
         }
       });
     },
+    new webpack.DllReferencePlugin({
+      manifest: require("./build/library/library.json"),
+    }),
+    // new HardSourceWebpackPlugin(),
     // new WebpackBundleAnalyzerPlugin(),
-    // new HtmlWebpackExternalsPlugin({
-    //   externals: [
-    //     {
-    //       module: 'react',
-    //       entry: 'https://unpkg.com/react@18.2.0/umd/react.production.min.js',
-    //       global: 'React',
-    //     },
-    //     {
-    //       module: 'react-dom',
-    //       entry: 'https://unpkg.com/react-dom@18/umd/react-dom.production.min.js',
-    //       global: 'ReactDOM',
-    //     },
-    //   ],
-    // })
+    new HtmlWebpackExternalsPlugin({
+      externals: [
+        {
+          module: "react",
+          entry: "https://unpkg.com/react@18.2.0/umd/react.production.min.js",
+          global: "React",
+        },
+        {
+          module: "react-dom",
+          entry:
+            "https://unpkg.com/react-dom@18/umd/react-dom.production.min.js",
+          global: "ReactDOM",
+        },
+      ],
+    }),
   ],
   optimization: {
     minimize: true,
@@ -132,6 +140,7 @@ module.exports = {
     rules: [
       {
         test: /.js$/,
+        include: path.resolve("src"),
         use: [
           {
             loader: "thread-loader",
@@ -140,6 +149,7 @@ module.exports = {
             },
           },
           "babel-loader",
+          // "happypack/loader",
         ],
       },
       {
@@ -184,6 +194,20 @@ module.exports = {
     ],
   },
   devtool: "source-map",
+  resolve: {
+    alias: {
+      react: path.resolve(
+        __dirname,
+        "./node_modules/react/umd/react.production.min.js"
+      ),
+      "react-dom": path.resolve(
+        __dirname,
+        "./node_modules/react-dom/umd/react-dom.production.min.js"
+      ),
+    },
+    extensions: [".js"],
+    mainFields: ["main"],
+  },
   // stats: "none",
   // });
 };

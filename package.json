@@ -8,6 +8,7 @@
     "watch": "webpack --watch webpack.dev.js",
     "build:ssr": "webpack --config webpack.ssr.js",
     "build:stat": "webpack --config webpack.prod.js --json > stat.json",
+    "dll": "webpack --config webpack.dll.js",
     "dev": "webpack-dev-server --config webpack.dev.js --hot"
   },
   "keywords": [],
@@ -36,6 +37,8 @@
     "file-loader": "^6.2.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "glob": "^10.2.2",
+    "happypack": "^5.0.1",
+    "hard-source-webpack-plugin": "^0.13.1",
     "html-webpack-externals-plugin": "^3.8.0",
     "html-webpack-plugin": "^5.5.1",
     "less-loader": "^11.1.0",
