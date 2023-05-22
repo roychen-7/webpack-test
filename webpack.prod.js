@@ -11,7 +11,8 @@ const WebpackBundleAnalyzerPlugin =
 const TerserPlugin = require("terser-webpack-plugin");
 const webpack = require("webpack");
 const HappyPack = require("happypack");
-var HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
+const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
+const { PurgeCSSPlugin } = require("purgecss-webpack-plugin");
 
 // const smp = new SpeedMeasurePlugin();
 
@@ -56,6 +57,10 @@ const setMPA = () => {
 
 const { entry, htmlWebpackPlugins } = setMPA();
 
+const PATHS = {
+  src: path.join(__dirname, "src"),
+};
+
 // module.exports = smp.wrap({
 module.exports = {
   mode: "production",
@@ -72,6 +77,9 @@ module.exports = {
     new CssMinimizerPlugin({
       test: /\.css$/i,
       parallel: true,
+    }),
+    new PurgeCSSPlugin({
+      paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
     }),
     ...htmlWebpackPlugins,
     new CleanWebpackPlugin(),
